@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package servod;
+
+service Servod {
+  rpc Connect(ConnectRequest) returns (ConnectResponse) {}
+}
+
+message ConnectRequest {
+  string board_name = 1;
+}
+
+message ConnectResponse {
+  string cpu_uart_pty = 1;
+  string cr50_uart_pty = 2;
+  string ec_uart_pty = 3;
+}

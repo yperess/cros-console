@@ -1,0 +1,55 @@
+{
+  "name": "ec-console",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@improbable-eng/grpc-web": "^0.15.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.91",
+    "@types/react": "^18.2.67",
+    "@types/react-dom": "^18.2.22",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4",
+    "pigweedjs": "^0.0.17",
+    "child_process": "^1.0.2",
+    "grpc-tools": "^1.12.4",
+    "ts-protoc-gen": "^0.15.0",
+    "protoc-gen-js": "^3.21.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start-service": ".venv/bin/python3 service/main.py",
+    "build-rpc-service": ".venv/bin/python3 -m grpc_tools.protoc -I=./rpc --python_out=service --grpc_python_out=service rpc/service.proto",
+    "build-rpc-client": "protoc -I=./rpc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:./src/generated --ts_out=service=grpc-web:./src/generated rpc/service.proto",
+    "envoy-get": "docker pull envoyproxy/envoy-dev:latest",
+    "envoy-start": "docker stop envoy ; docker rm envoy ; docker run --name envoy -p 9901:9901 -p 8080:8080 -v $(pwd)/envoy.yaml:/etc/envoy/envoy.yaml envoyproxy/envoy-dev:latest\n",
+    "build-rpc": "npm run build-rpc-service && npm run build-rpc-client"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
