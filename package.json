@@ -31,7 +31,7 @@
     "build-rpc-service": ".venv/bin/python3 -m grpc_tools.protoc -I=./rpc --python_out=service --grpc_python_out=service rpc/service.proto",
     "build-rpc-client": "protoc -I=./rpc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:./src/generated --ts_out=service=grpc-web:./src/generated rpc/service.proto",
     "envoy-get": "docker pull envoyproxy/envoy-dev:latest",
-    "envoy-start": "docker stop envoy ; docker rm envoy ; docker run --name envoy -p 9901:9901 -p 8080:8080 -v $(pwd)/envoy.yaml:/etc/envoy/envoy.yaml envoyproxy/envoy-dev:latest\n",
+    "envoy-start": "docker stop envoy ; docker rm envoy ; docker run --name envoy --net=host -p 9901:9901 -p 8080:8080 -v $(pwd)/envoy.yaml:/etc/envoy/envoy.yaml envoyproxy/envoy-dev:latest\n",
     "build-rpc": "npm run build-rpc-service && npm run build-rpc-client"
   },
   "eslintConfig": {
